@@ -2,11 +2,11 @@ openapi: "3.0.0"
 
 info:
   version: "1.0.0"
-  title: "react-profile-vue"
+  title: "profiles"
 
 paths:
 
-  /user/register:
+  /api/user/register:
     post:
       summary: "Register a new user"
       requestBody:
@@ -29,7 +29,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ValidationErrors'
 
-  /user/login:
+  /api/user/login:
     post:
       summary: "Login"
       requestBody:
@@ -52,7 +52,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /user/me:
+  /api/user/me:
     get:
       security:
         - bearerAuth: []
@@ -71,7 +71,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /user/{id}:
+  /api/user/{id}:
     put:
       security:
         - bearerAuth: []
@@ -128,34 +128,28 @@ components:
     UserRegister:
       description: "New user information"
       properties:
-        name:
-          type: string
-          nullable: true
-        surname:
-          type: string
-          nullable: true
         email:
           type: string
-          nullable: false
         password:
           type: string
-          nullable: false
+      required:
+        - email
+        - password
 
     User:
       description: "Existing user information"
       properties:
         id:
           type: string
-          nullable: false
         name:
           type: string
-          nullable: true
         surname:
           type: string
-          nullable: true
         email:
           type: string
-          nullable: false
+      required:
+        - id
+        - email
 
     UserUpdate:
       description: "An update to user information"
@@ -169,24 +163,31 @@ components:
         email:
           type: string
           nullable: false
+      required:
+        - email
+
 
     UserLoginResponse:
       properties:
         token:
           description: "A token for a newly registered login session"
           type: string
-          nullable: false
         user:
           $ref: '#/components/schemas/User'
+      required:
+        - token
+        - user
 
     LoginRequest:
       properties:
         email:
           type: string
-          nullable: false
         password:
           type: string
-          nullable: false
+
+      required:
+        - email
+        - password
 
     Error:
       description: "A general error"
@@ -194,6 +195,8 @@ components:
         message:
           type: string
           nullable: false
+      required:
+        - message
 
     ValidationErrors:
       description: "Encapsulates all of the validation errors for a given request"

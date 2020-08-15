@@ -5,8 +5,9 @@ export default class Home extends Component {
 
     render() {
         return (
-            <PageTemplate>
-                Hello From Home
+            <PageTemplate
+                title="Home"
+            >
             </PageTemplate>
         );
     }

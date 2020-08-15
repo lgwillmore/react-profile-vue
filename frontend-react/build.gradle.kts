@@ -3,14 +3,15 @@ plugins {
 }
 
 val swaggerPath = "$rootDir/swagger.yml"
-val generationPath = "$projectDir/src/.client"
+val generationPath = "$projectDir/src/client/generated"
 
 openApiValidate {
     inputSpec.set(swaggerPath)
 }
 
 openApiGenerate {
-    generatorName.set("typescript-fetch")
+    generatorName.set("typescript-axios")
+
     inputSpec.set(swaggerPath)
     outputDir.set(generationPath)
     skipOverwrite.set(false)

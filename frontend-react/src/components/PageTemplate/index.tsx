@@ -1,14 +1,28 @@
 import React, {Component} from "react";
+import {Col, Container, Row} from "react-bootstrap";
 
-export default class PageTemplate extends Component {
+interface PageTemplateProps {
+    title: string
+}
+
+export default class PageTemplate extends Component<PageTemplateProps> {
 
     render() {
         return (
-            <div>
-                Page Template
-                <div>{this.props.children}</div>
-            </div>
-        );
+            <Container fluid>
+                <Row>
+                    <Col md={{span: 8, offset: 2}}>
+                        <h2>{this.props.title}</h2>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={{span: 8, offset: 2}}>
+                        {this.props.children}
+                    </Col>
+                </Row>
+            </Container>
+        )
+            ;
     }
 
 }
