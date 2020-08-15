@@ -1,0 +1,209 @@
+openapi: "3.0.0"
+
+info:
+  version: "1.0.0"
+  title: "react-profile-vue"
+
+paths:
+
+  /user/register:
+    post:
+      summary: "Register a new user"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+      responses:
+        "201":
+          description: "New user successfully registered"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLoginResponse'
+        "422":
+          description: "Unprocessable Entity. There is a validation failure with some part of the data"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrors'
+
+  /user/login:
+    post:
+      summary: "Login"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        "200":
+          description: "Login successful"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLoginResponse'
+        "401":
+          description: "Login not successful"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /user/me:
+    get:
+      security:
+        - bearerAuth: []
+        description: "Retrieve the user data for provided token"
+      responses:
+        "200":
+          description: "Retrieved successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "401":
+          description: "Not Authentic"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /user/${id}:
+    put:
+      security:
+        - bearerAuth: []
+      summary: "Update a user information"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        "202":
+          description: "Update successful"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "422":
+          description: "Unprocessable Entity. There is a validation failure with some part of the data"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrors'
+        "401":
+          description: "Not Authentic"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: "Not Authorized"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+components:
+
+  securitySchemes:
+    bearerAuth:
+      description: "Single issue long lived token"
+      type: http
+      scheme: bearer
+
+  schemas:
+    UserRegister:
+      description: "New user information"
+      properties:
+        name:
+          type: string
+          nullable: true
+        surname:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: false
+        password:
+          type: string
+          nullable: false
+
+    User:
+      description: "Existing user information"
+      properties:
+        id:
+          type: string
+          nullable: false
+        name:
+          type: string
+          nullable: true
+        surname:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: false
+
+    UserUpdate:
+      description: "An update to user information"
+      properties:
+        name:
+          type: string
+          nullable: true
+        surname:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: false
+
+    UserLoginResponse:
+      properties:
+        token:
+          description: "A token for a newly registered login session"
+          type: string
+          nullable: false
+        user:
+          $ref: '#/components/schemas/User'
+
+    LoginRequest:
+      properties:
+        email:
+          type: string
+          nullable: false
+        password:
+          type: string
+          nullable: false
+
+    Error:
+      description: "A general error"
+      properties:
+        message:
+          type: string
+          nullable: false
+
+    ValidationErrors:
+      description: "Encapsulates all of the validation errors for a given request"
+      properties:
+        errors:
+          nullable: false
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+
+    ValidationError:
+      description: "Describes a single validation error"
+      properties:
+        path:
+          description: "The path to the property (allows for nested data). For example ['email']"
+          nullable: false
+          type: array
+          items:
+            type: string
+        message:
+          nullable: false
+          description: "A message describing why the property failed validation"
+          type: string
