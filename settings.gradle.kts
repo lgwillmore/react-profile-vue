@@ -1,2 +1,2 @@
-rootProject.name = "react-profile-vue"
+include("frontend-react")
 
