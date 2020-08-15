@@ -3,7 +3,7 @@ plugins {
 }
 
 val swaggerPath = "$rootDir/swagger.yml"
-val generationPath = "$projectDir/src/generated"
+val generationPath = "$projectDir/src/.client"
 
 openApiValidate {
     inputSpec.set(swaggerPath)
