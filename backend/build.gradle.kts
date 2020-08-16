@@ -56,7 +56,9 @@ tasks {
             "$rootDir/backend/.gradle",
             "$rootDir/backend/settings.gradle",
             "$rootDir/backend/build.gradle",
-            "$rootDir/backend/README.md"
+            "$rootDir/backend/README.md",
+            "$rootDir/backend/docs",
+            "$rootDir/backend/.openapi-generator"
         )
     }
 
@@ -66,7 +68,7 @@ tasks {
             "$rootDir/backend/.gradle",
             "$rootDir/backend/settings.gradle",
             "$rootDir/backend/build.gradle",
-            "$rootDir/backend/src",
+            "$rootDir/backend/src/kotlin/main/codes/laurence/generated",
             "$rootDir/backend/docs",
             "$rootDir/backend/.openapi-generator"
         )
