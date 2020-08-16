@@ -4,7 +4,7 @@ A simple user profile management app implemented with a simple in memory kotlin 
 
 I started my frontend SPA work in the Angular world, but have been entirely Vue focused for the last few years. I really enjoy Vue.
 
-I have not taken a more than an introductory look at React, so this will help me to learn and compare the 2 frameworks as well (hopefully I am able to use best practices).
+I have not taken more than an introductory look at React, so this will help me to learn and compare the 2 frameworks as well (hopefully I am able to use best practices).
 
 Aims:
 

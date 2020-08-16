@@ -5,10 +5,14 @@ plugins {
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 val kotlinVersion: String by project
 val kotlinXVersion: String by project
+val ktorVersion: String by project
+val slf4jVersion: String by project
+val logbackVersion: String by project
 
 dependencies {
     implementation(kotlin("stdlib"))
@@ -16,7 +20,15 @@ dependencies {
     implementation("org.jetbrains.kotlin", "kotlin-reflect", kotlinVersion)
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", kotlinXVersion)
 
-    // For generated
+    // Ktor
+    api("io.ktor", "ktor-server-netty", ktorVersion)
+
+    // Logging
+    implementation("org.slf4j", "slf4j-api", slf4jVersion)
+    implementation("ch.qos.logback", "logback-core", logbackVersion)
+    implementation("ch.qos.logback", "logback-classic", logbackVersion)
+
+    // For generated code
     api("com.squareup.moshi:moshi-kotlin:1.9.2")
     api("com.squareup.moshi:moshi-adapters:1.9.2")
     api("com.squareup.okhttp3:okhttp:4.2.2")
