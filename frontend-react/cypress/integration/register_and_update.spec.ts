@@ -110,5 +110,4 @@ describe("When I go to the site for the first time", () => {
             })
         })
     })
-
-})
+});

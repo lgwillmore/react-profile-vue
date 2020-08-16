@@ -31,3 +31,6 @@ logs/
 
 replay_*
 hs_err_*
+
+## Generated
+backend/src/main/kotlin/codes/laurence/rpv/generated/
