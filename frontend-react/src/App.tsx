@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Link, Route, Switch} from 'react-router-dom';
 import './App.css';
 import Home from "./views/Home";
 import Profile from "./views/Profile";
@@ -11,14 +11,16 @@ function App() {
         <BrowserRouter>
             <Navbar bg="dark" variant="dark">
                 <Nav className="ml-auto mr-auto" activeKey={window.location.pathname}>
-                    <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="/profile">Profile</Nav.Link>
-                    <Nav.Link href="/login">Login/Register</Nav.Link>
+                    <Nav.Link as={Link} to="/">Home</Nav.Link>
+                    <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
+                    <Nav.Link as={Link} to="/login">Login/Register</Nav.Link>
                 </Nav>
             </Navbar>
-            <Route path="/" exact component={Home}/>
-            <Route path="/profile" component={Profile}/>
-            <Route path="/login" component={Login}/>
+            <Switch>
+                <Route path="/" exact component={Home}/>
+                <Route path="/profile" component={Profile}/>
+                <Route path="/login" component={Login}/>
+            </Switch>
         </BrowserRouter>
     );
 }

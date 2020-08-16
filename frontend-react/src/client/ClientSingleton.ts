@@ -9,14 +9,15 @@ export class ClientSingleton {
 
     static getInstance(): DefaultApi {
         if (this.instance == null) {
-            console.log("Instance is null")
             this.instance = new DefaultApi()
         }
         return this.instance
     }
 
     static setInstance(api: DefaultApi) {
-        console.log("setting instance")
+        if (this.instance != null) {
+            throw Error("Already set")
+        }
         this.instance = api
     }
 }

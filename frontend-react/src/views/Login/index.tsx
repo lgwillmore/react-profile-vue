@@ -1,24 +1,37 @@
 import React, {Component} from "react";
 import PageTemplate from "../../components/PageTemplate";
 import {Col, Row, Tab, Tabs} from "react-bootstrap";
-import {LoginRequest, UserLoginResponse} from "../../client/generated";
+import {LoginRequest, User} from "../../client/generated";
 import {ClientSingleton} from "../../client/ClientSingleton";
+import {RouteComponentProps, withRouter} from "react-router";
+import {setUserAction} from "../../stores/user/actions";
+import {connect} from "react-redux";
+import {Dispatch} from "redux";
+import {UserState} from "../../stores/user/types";
 
 interface LoginState {
-    registerResponse: UserLoginResponse | null,
     registerFormEmail: string,
     registerFormPassword: string
 }
 
+interface UserStoreProps {
+    user: User | null
+}
 
-export default class Login extends Component<{}, LoginState> {
+interface UserStoreDispatchProps {
+    setUser: (user: User) => void
+}
+
+type CombinedProps = RouteComponentProps & UserStoreDispatchProps & UserStoreProps
+
+
+class Login extends Component<CombinedProps, LoginState> {
 
     state: LoginState
 
-    constructor(props: {}) {
+    constructor(props: CombinedProps) {
         super(props);
         this.state = {
-            registerResponse: null,
             registerFormEmail: "",
             registerFormPassword: ""
         }
@@ -38,17 +51,17 @@ export default class Login extends Component<{}, LoginState> {
             password: this.state.registerFormPassword
         }
         ClientSingleton.getInstance().apiUserRegisterPost(login).then((response) => {
-            console.log("Got state")
-            this.setState({registerResponse: response.data})
+            this.props.setUser(response.data.user)
+            this.props.history.push("/")
         }).catch((reason => {
             console.log("error")
         }))
     }
 
     get registeredUser() {
-        const response = this.state.registerResponse
-        if (response != null) {
-            return (<div>{response.token}</div>)
+        const user = this.props.user
+        if (user != null) {
+            return (<div>{user.email}</div>)
         } else {
             return (<div>No Token</div>)
         }
@@ -100,3 +113,22 @@ export default class Login extends Component<{}, LoginState> {
     }
 
 }
+
+const mapStateToProps = (state: UserState) => {
+    const props: UserStoreProps = {
+        user: state.user
+    }
+    return props
+}
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        setUser: (user: User) => {
+            dispatch(setUserAction(user))
+        }
+    }
+}
+
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(Login)
+)
