@@ -80,7 +80,7 @@ paths:
         - in: path
           name: id
           schema:
-            type: integer
+            type: string
           required: true
           description: "ID of the user to update"
       requestBody:
@@ -162,7 +162,6 @@ components:
           nullable: true
         email:
           type: string
-          nullable: false
       required:
         - email
 

@@ -1,28 +1,24 @@
 import React, {Component} from "react";
 import PageTemplate from "../../components/PageTemplate";
-import {Col, Row, Tab, Tabs} from "react-bootstrap";
+import {Button, Col, Form, Row, Tab, Tabs} from "react-bootstrap";
 import {LoginRequest, User} from "../../client/generated";
 import {ClientSingleton} from "../../client/ClientSingleton";
 import {RouteComponentProps, withRouter} from "react-router";
 import {setUserAction} from "../../stores/user/actions";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
-import {UserState} from "../../stores/user/types";
 
 interface LoginState {
     registerFormEmail: string,
     registerFormPassword: string
 }
 
-interface UserStoreProps {
-    user: User | null
-}
 
 interface UserStoreDispatchProps {
     setUser: (user: User) => void
 }
 
-type CombinedProps = RouteComponentProps & UserStoreDispatchProps & UserStoreProps
+type CombinedProps = RouteComponentProps & UserStoreDispatchProps
 
 
 class Login extends Component<CombinedProps, LoginState> {
@@ -54,17 +50,9 @@ class Login extends Component<CombinedProps, LoginState> {
             this.props.setUser(response.data.user)
             this.props.history.push("/")
         }).catch((reason => {
+            // TODO: Nice error handling, especially validation errors, with a pop message or something.
             console.log("error")
         }))
-    }
-
-    get registeredUser() {
-        const user = this.props.user
-        if (user != null) {
-            return (<div>{user.email}</div>)
-        } else {
-            return (<div>No Token</div>)
-        }
     }
 
     render() {
@@ -74,38 +62,41 @@ class Login extends Component<CombinedProps, LoginState> {
             >
                 <Tabs defaultActiveKey="login" id="login-register-tabs">
                     <Tab eventKey="login" title="Login">
-                        Login
+                        <br/>
+                        <div>Not implemented yet. Register.</div>
                     </Tab>
                     <Tab eventKey="register" title="Register">
                         <br/>
                         <Row><Col>
-                            <label>
-                                email:
-                                <input
-                                    id="register-email"
-                                    type="text"
-                                    value={this.state.registerFormEmail}
-                                    onChange={this.onRegisterEmailChange.bind(this)}
-                                />
-                            </label>
-                        </Col></Row>
-                        <Row><Col>
-                            <label>
-                                password:
-                                <input
-                                    id="register-password"
-                                    type="password"
-                                    value={this.state.registerFormPassword}
-                                    onChange={this.onRegisterPasswordChange.bind(this)}
-                                />
-                            </label>
+                            <Form>
+                                <Form.Group controlId="register-email">
+                                    <Form.Label>Email address</Form.Label>
+                                    <Form.Control
+                                        type="email"
+                                        placeholder="Enter email"
+                                        value={this.state.registerFormEmail}
+                                        onChange={this.onRegisterEmailChange.bind(this)}
+                                    />
+                                    <Form.Text className="text-muted">
+                                        We'll never share your email with anyone else.
+                                    </Form.Text>
+                                </Form.Group>
 
+                                <Form.Group controlId="register-password">
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Password"
+                                        value={this.state.registerFormPassword}
+                                        onChange={this.onRegisterPasswordChange.bind(this)}
+                                    />
+                                </Form.Group>
+                            </Form>
                         </Col></Row>
                         <br/>
                         <Row><Col>
-                            <button onClick={this.register}>Submit</button>
+                            <Button variant="success" onClick={this.register}>Submit</Button>
                         </Col></Row>
-                        {this.registeredUser}
                     </Tab>
                 </Tabs>
             </PageTemplate>
@@ -114,12 +105,6 @@ class Login extends Component<CombinedProps, LoginState> {
 
 }
 
-const mapStateToProps = (state: UserState) => {
-    const props: UserStoreProps = {
-        user: state.user
-    }
-    return props
-}
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
@@ -130,5 +115,5 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 }
 
 export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(Login)
+    connect(null, mapDispatchToProps)(Login)
 )

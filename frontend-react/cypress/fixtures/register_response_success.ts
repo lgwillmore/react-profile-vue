@@ -5,6 +5,7 @@ export function userLoginResponseFixture(): UserLoginResponse {
     return {
         token: "some_token",
         user: {
+            id: "1",
             name: "Jane",
             surname: "Smith",
             email: "jane@somewhere.com"

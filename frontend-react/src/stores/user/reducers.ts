@@ -1,6 +1,12 @@
 import {SET_USER, UserState, UserStoreAction} from "./types";
 
 const initialState: UserState = {
+    // user: {
+    //     id: "1",
+    //     name: "Frank",
+    //     surname: "Herbert",
+    //     email: "frank@dune.com"
+    // }
     user: null
 }
 

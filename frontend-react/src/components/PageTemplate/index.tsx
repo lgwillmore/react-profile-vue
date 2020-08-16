@@ -11,8 +11,8 @@ export default class PageTemplate extends Component<PageTemplateProps> {
         return (
             <Container fluid>
                 <Row>
-                    <Col md={{span: 8, offset: 2}}>
-                        <h2>{this.props.title}</h2>
+                    <Col md={{span: 8, offset: 2}} className="d-flex flex-row">
+                        <h2 className="ml-auto mr-auto">{this.props.title}</h2>
                     </Col>
                 </Row>
                 <Row>
