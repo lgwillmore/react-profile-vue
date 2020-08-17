@@ -83,15 +83,19 @@ We are using `Cypress` for full UI based tests. Cypress is a javascript browser 
           npm run cypress:run
           
           
-### Run with the backend
+# backend
 
 If you want to run the frontend application for real against a lightweight backend.
 
-1) Start the backend. From the project root directory you can start the backend at "http://localhost:5000" with:
+1) We also generate server side code from the `swagger.yml`. This means that our frontend and backend are in sync with expectations.
+
+       ./gradlew backend:openApiGenerate
+
+2) Start the backend. From the project root directory you can start the backend at `http://localhost:5000` with:
 
        ./gradlew backend:run
        
-2) Start the frontend dev server at `http://localhost:3000`. From the `frontend-react` directory:
+3) Now you can start the frontend  dev server and interact with it at `http://localhost:3000`. From the `frontend-react` directory:
 
        npm run start
 
