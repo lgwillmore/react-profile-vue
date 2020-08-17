@@ -37,7 +37,7 @@ class Profiles {
         val meta = usersByID[id] ?: throw Exception("Not Found")
         meta.user = meta.user.copy(
             name = userUpdate.name,
-            surname = userUpdate.name,
+            surname = userUpdate.surname,
             email = userUpdate.email
         )
         return meta.user
