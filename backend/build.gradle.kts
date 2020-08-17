@@ -1,6 +1,11 @@
 plugins {
     kotlin("jvm") version "1.3.72"
     id("org.openapi.generator") version "4.3.1"
+    application
+}
+
+application {
+    mainClassName = "codes.laurence.rpv.web.MainKt"
 }
 
 repositories {
@@ -92,3 +97,5 @@ tasks {
     }
 
 }
+
+
