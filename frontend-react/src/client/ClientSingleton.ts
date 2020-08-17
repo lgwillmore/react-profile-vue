@@ -1,4 +1,4 @@
-import {DefaultApi} from "./generated";
+import {DefaultApi, DefaultApiFactory} from "./generated";
 
 export class ClientSingleton {
 
@@ -9,7 +9,11 @@ export class ClientSingleton {
 
     static getInstance(): DefaultApi {
         if (this.instance == null) {
-            this.instance = new DefaultApi()
+            const basePath = ``
+            this.instance = DefaultApiFactory(
+                undefined,
+                basePath
+            ) as DefaultApi
         }
         return this.instance
     }

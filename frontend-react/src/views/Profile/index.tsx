@@ -59,7 +59,6 @@ class Profile extends Component<CombinedProps, ProfileState> {
             name: this.state.editName,
             surname: this.state.editSurname
         }
-        console.log(this.props.user?.id)
         ClientSingleton.getInstance().apiUserIdPut(this.props.user!.id, update).then((response) => {
             this.props.setUser(response.data)
             this.setState({showEdit: false})

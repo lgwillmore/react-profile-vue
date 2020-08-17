@@ -51,7 +51,7 @@ class Login extends Component<CombinedProps, LoginState> {
             this.props.history.push("/")
         }).catch((reason => {
             // TODO: Nice error handling, especially validation errors, with a pop message or something.
-            console.log("error")
+            console.error(reason)
         }))
     }
 
